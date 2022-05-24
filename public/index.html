@@ -1,0 +1,191 @@
+<html>
+<head>
+	<title>FFmpeg GUI</title>
+	<style type="text/css">
+	.clear {
+		clear:both;
+	}
+	.error {
+		color:#f00;
+		font-wight:bold;
+		padding:10px;
+	}
+	.uploadSuccess {
+		color:#45862d;
+		font-wight:bold;
+		padding:10px;
+	}
+	.fieldset {
+		clear:both;
+		padding:5px;
+	}
+	.fieldset label {
+		width:250px;
+		float:left;
+	}
+	.fieldset input {
+		width:120px;
+		float:left;
+	}
+	.fieldset input.checkbox {
+		width:auto;
+		float:left;
+	}
+	</style>
+</head>
+<body>
+
+	<h1>ffmpeg web gui</h1>
+
+	<form action="/upload" method="post"enctype="multipart/form-data">
+		<div class="fieldset">
+			<label for="video_file">Video file:</label>
+			<input type="file" name="video_file" id="video_file" accept="video/*" />
+		</div>
+
+
+		<div class="fieldset">
+			<label for="file">Video Size:</label>  <!-- -b:v 700k-->
+			<select name="video_size">
+				<option value="" selected="selected">Unchanged</option>
+				<option value="800x600">800x600 (4:3)</option>
+				<option value="704x576">704x576</option>
+				<option value="640x360">640x360 (16:9)</option>
+				<option value="560x304">560x304</option>
+				<option value="512x384">512x384</option>
+				<option value="400x300">400x300</option>
+				<option value="320x240">320x240</option>
+
+			</select>
+		</div>
+
+
+		<div class="fieldset">
+			<label for="file">Video Bitrate:</label>  <!-- -b:v 700k-->
+			<select name="video_bitrate">
+				<option value="1600">1600 kbit/s</option>
+				<option value="1000">1000 kbit/s</option>
+				<option value="900">900 kbit/s</option>
+				<option value="800">800 kbit/s</option>
+				<option value="768">768 kbit/s</option>
+				<option value="700" selected="selected">700 kbit/s</option>
+				<option value="360">360 kbit/s</option>
+			</select>
+		</div>
+
+		<div class="fieldset">
+			<label for="file">Frame Rate:</label>  <!-- -b:v 700k-->
+			<select name="video_framerate">
+				<option value="30" selected="selected">30 fps</option>
+				<option value="25">25 fps</option>
+				<option value="15">15 fps</option>
+				<option value="12">12 fps</option>
+			</select>
+		</div>
+
+		<div class="fieldset">
+			<label>Deinterlace</label>
+			<input type="checkbox" name="encoding_video_deinterlace" checked="checked" class="checkbox" />
+		</div>
+
+
+		<div class="fieldset">
+			<label>Enable Audio</label>
+			<input type="checkbox" name="encoding_enable_audio" checked="checked" class="checkbox" />
+		</div>
+
+
+		<div class="fieldset">
+			<label for="file">Audio sampling rate (in Hz):</label> <!-- -ar 44100 -->
+			<select name="encoding_audio_sampling_rate">
+				<option value="44100" selected="selected">44100 Mz</option>
+				<option value="22050">22050 Mz</option>
+				<option value="11025">11025 Mz</option>
+			</select>
+		</div>
+
+		<div class="fieldset">
+			<label for="file">Audio bitrate (kbps):</label> <!-- -ab 128k -->
+			<select name="encoding_audio_bitrate">
+				<option value="320">320 kbps</option>
+				<option value="256">256 kbps (DAB Quality)</option>
+				<option value="192">192 kbps (CD Quality)</option>
+				<option value="128" selected="selected">128 kbps</option>
+				<option value="96">96 kbps </option>
+				<option value="32">32 kbps </option>
+				<option value="8">8 kbps (Telephone quality)</option>
+			</select>
+		</div>
+
+		<div class="fieldset">
+			<label>Stereo</label>
+			<input type="radio" name="encoding_audio_channels" checked="checked" value="stereo" class="checkbox"  />
+		</div>
+		<div class="fieldset">
+			<label>Mono</label>
+			<input type="radio" name="encoding_audio_channels" value="mono" class="checkbox" />
+		</div>
+		<div class="clear"></div>
+
+		<!-- <h2>HTML5 Video Compatable</h2>
+		<div class="fieldset">
+			<label>x264 (audio codec libfaac) </label>
+			<input type="checkbox" name="encoding_x264" checked="checked" class="checkbox" />
+		</div>
+		<div class="fieldset">
+			<label>ogv (audio codec libvorbis) </label>
+			<input type="checkbox" name="encoding_ogv"  checked="checked"  class="checkbox"/>
+		</div>
+
+		<div class="fieldset">
+			<label>webm </label>
+			<input type="checkbox" name="encoding_webm"  checked="checked" class="checkbox" />
+		</div>
+			<div class="fieldset">
+			<label>Capture stills</label>
+			<input type="checkbox" name="encoding_stills"  checked="checked" class="checkbox" />
+		</div> -->
+
+		<div class="clear"></div>
+
+		<!-- Todo
+		<h2>Other Encodings</h2>
+		<div class="fieldset">
+			<label>iPod / iPhone</label>
+			<input type="checkbox" name="encoding_ipod_iphone"  class="checkbox" />
+			<span>(320x180)</span>
+		</div>
+		<div class="fieldset">
+			<label>PSP</label>
+			<input type="checkbox" name="encoding_psp"   class="checkbox"/>
+			<span>(320x240)</span>
+		</div>
+		<div class="fieldset">
+			<label>Animated gif (uncompressed)</label>
+			<input type="checkbox" name="encoding_psp"  class="checkbox" />
+		</div>
+		<div class="fieldset">
+			<label>Extract mp3 from video</label>
+			<input type="checkbox" name="encoding_extract_audio"  class="checkbox" />
+		</div>
+		<div class="fieldset">
+			<label>Convert to flv</label>
+			<input type="checkbox" name="encoding_flv"  class="checkbox" />
+		</div>
+		<div class="fieldset">
+			<label>Convert to mpeg for dvd players</label>
+			<input type="checkbox" name="encoding_dvd"  class="checkbox" />
+		</div>
+		<div class="fieldset">
+			<label>Convert encode divx</label>
+			<input type="checkbox" name="encoding_divx"  class="checkbox" />
+		</div>
+		<div class="clear"></div>
+		-->
+
+		<input type="submit" name="submit" value="Upload and convert" />
+
+	</form>
+
+</body>
+</html>
